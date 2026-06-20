@@ -53,3 +53,45 @@ private fun partition(arr: MutableList<Int>, low: Int, high: Int): Int {
 
 	return i + 1
 }
+
+/**
+ * Iterative QuickSort using an explicit stack to store subarray ranges.
+ *
+ * This function performs the same partitioning as the recursive `quickSort` but
+ * avoids recursion by pushing (low, high) ranges onto a stack. Each loop
+ * iteration pops a range, partitions it, and pushes the resulting sub-ranges
+ * that still need sorting. The ArrayDeque therefore plays the role of the
+ * function call stack that recursion would normally use (LIFO order).
+ */
+fun iterativeQuickSort(arr: MutableList<Int>) {
+	// Small arrays are already sorted.
+	if (arr.size < 2) return
+
+	// Stack of (low, high) ranges to sort. We use ArrayDeque as a LIFO stack.
+	val stack = ArrayDeque<Pair<Int, Int>>()
+
+	// Start with the whole array range.
+	stack.addLast(0 to arr.size - 1)
+
+	while (stack.isNotEmpty()) {
+		val (low, high) = stack.removeLast()
+
+		// If the range is invalid or a single element, it's already sorted.
+		if (low >= high) continue
+
+		// Partition the current range and get pivot index.
+		val pivotIndex = partition(arr, low, high)
+
+		// After partition, elements left of pivotIndex are <= pivot and
+		// elements right are > pivot. We need to sort those sub-ranges.
+		// Push the right range first and then the left range so that the
+		// left range is processed next (mimicking the typical recursive order).
+		if (pivotIndex + 1 < high) {
+			stack.addLast(pivotIndex + 1 to high)
+		}
+		if (low < pivotIndex - 1) {
+			stack.addLast(low to pivotIndex - 1)
+		}
+	}
+}
+
