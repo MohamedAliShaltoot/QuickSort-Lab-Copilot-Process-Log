@@ -48,6 +48,25 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * A simple Compose screen that accepts a comma-separated list of integers,
+ * sorts them using the project's `quickSort` algorithm, and displays the result.
+ *
+ * The UI contains:
+ * - a [TextField] for entering comma-separated integers,
+ * - a [Button] labelled "Sort" which parses and sorts the input,
+ * - and a [Text] area that shows either the sorted result or an error message.
+ *
+ * Input/validation behavior:
+ * - If the input is empty or only whitespace, the screen shows the error
+ *   "Please enter at least one number." and does not attempt to parse.
+ * - If any token cannot be parsed as an [Int], the screen shows the error
+ *   "Input contains invalid integer(s). Please enter only integers separated by commas.".
+ * - For valid input, the composable calls `quickSort(nums)` (the non-mutating overload)
+ *   and displays the sorted sequence. The original parsed list is not mutated.
+ *
+ * @param modifier Optional [Modifier] applied to the root column.
+ */
 @Composable
 fun QuickSortScreen(modifier: Modifier = Modifier) {
     var input by remember { mutableStateOf("") }
