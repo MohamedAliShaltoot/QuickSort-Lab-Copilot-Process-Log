@@ -200,7 +200,7 @@ ascending run, matching its documented adaptive behavior. The small-random resul
 slower than custom implementations) is likely JVM warm-up/measurement noise rather than a
 real signal, given the inconsistency with every other result.
 
-Step 10: Document the Process
+## Step 10: Document the Process
 
 Prompt used: "Based on these benchmark results — random 50,000: recursive 48ms, iterative
 59ms, built-in 42ms; already-sorted 50,000: recursive StackOverflowError, iterative ~65
