@@ -36,7 +36,7 @@ private fun partition(arr: MutableList<Int>, low: Int, high: Int): Int {
 	val pivot = arr[high]
 	var i = low - 1
 
-	for (j in low..high) {
+	for (j in low until high) {
 		// Move every value smaller than the pivot to the left side.
 		if (arr[j] <= pivot) {
 			i++

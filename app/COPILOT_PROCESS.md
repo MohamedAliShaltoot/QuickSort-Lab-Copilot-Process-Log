@@ -151,3 +151,12 @@ emulator: valid input sorts and displays correctly; invalid input shows a red er
 
 **Note:** Empty input falls through silently to the placeholder text rather than showing a
 result or error — flagged for step 8.
+
+## Step 8: Debug — Intentional Bug
+**Bug introduced manually:** Changed `for (j in low until high)` to `for (j in low..high)` in
+`partition`, which incorrectly includes the pivot element in its own comparison loop.
+
+**Prompt used:** "My QuickSort tests are failing. Can you find the bug in the partition
+function and explain what's wrong and how to fix it?"
+
+**Verification:** Reverted to `until high`; reran QuickSortTest — all tests pass.
