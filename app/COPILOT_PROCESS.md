@@ -9,10 +9,11 @@ overload `fun quickSort(arr: MutableList<Int>): MutableList<Int>`..."
 
 **Result:** Copilot generated a correct Lomuto-partition recursive QuickSort on the first try.
 
-**Modification made:** The generated overload mutated the caller's original list. Asked Copilot
-to change it to return a sorted copy instead, to avoid unexpected side effects when called from UI
-code later. Prompt: "Modify the second quickSort overload so it does not mutate the original
-list..."
+**Modification made:** Original overload mutated the caller's list and returned the same
+reference. Asked Copilot: "Modify the second quickSort overload so it does not mutate the
+original list — it should sort a copy and return that copy, leaving the input list unchanged."
+Result: Copilot correctly used `arr.toMutableList()` to create a defensive copy before sorting.
+Verified original list stays unmodified.
 
 ## Step 6: Unit Test
 **Prompt used:** (fill in after you run it)
