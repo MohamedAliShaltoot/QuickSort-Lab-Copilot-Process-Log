@@ -152,11 +152,27 @@ emulator: valid input sorts and displays correctly; invalid input shows a red er
 **Note:** Empty input falls through silently to the placeholder text rather than showing a
 result or error — flagged for step 8.
 
-## Step 8: Debug — Intentional Bug
+## Step 8: Debug and Refine
+
+### Intentional bug
 **Bug introduced manually:** Changed `for (j in low until high)` to `for (j in low..high)` in
-`partition`, which incorrectly includes the pivot element in its own comparison loop.
+`partition`, which incorrectly included the pivot element (`arr[high]`) in its own comparison
+loop, corrupting the partition boundary (`i`) and producing incorrect sort results.
 
 **Prompt used:** "My QuickSort tests are failing. Can you find the bug in the partition
 function and explain what's wrong and how to fix it?"
 
-**Verification:** Reverted to `until high`; reran QuickSortTest — all tests pass.
+**Result:** Reverted to `for (j in low until high)`. Reran QuickSortTest — all 5 tests pass.
+
+### Organic edge case: empty UI input
+**Issue found:** Sort button gave no clear feedback when input was empty or blank — fell
+through silently to the placeholder text, indistinguishable from "not yet sorted."
+
+**Prompt used:** "In the QuickSortScreen composable, the Sort button currently shows no clear
+feedback when the input is empty or blank... Update it so blank input shows an explicit error
+message..."
+
+**Result:** Added two checks — `input.isBlank()` for empty/whitespace input, and a separate
+`tokens.isEmpty()` check for inputs like ",,,," that aren't blank but contain no actual
+numbers. Both display "Please enter at least one number." Verified on emulator: empty input,
+comma-only input, invalid integers, and valid input all behave correctly now.

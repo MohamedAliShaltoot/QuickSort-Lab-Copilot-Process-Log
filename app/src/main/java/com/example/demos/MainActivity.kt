@@ -67,14 +67,26 @@ fun QuickSortScreen(modifier: Modifier = Modifier) {
         Button(onClick = {
             errorText = null
             resultText = ""
+
+            if (input.isBlank()) {
+                errorText = "Please enter at least one number."
+                return@Button
+            }
+
             // Split on commas, trim whitespace, ignore empty tokens
             val tokens = input.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+
+            if (tokens.isEmpty()) {
+                errorText = "Please enter at least one number."
+                return@Button
+            }
+
             try {
                 val nums = tokens.map { it.toInt() }.toMutableList()
                 // Use the convenience overload which returns a sorted copy.
                 val sorted = quickSort(nums)
                 resultText = sorted.joinToString(", ")
-            } catch (e: NumberFormatException) {
+            } catch (_: NumberFormatException) {
                 errorText = "Input contains invalid integer(s). Please enter only integers separated by commas."
             }
         }) {
